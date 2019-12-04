@@ -1,7 +1,16 @@
 package com.shinejin.advance.base;
 
+import java.util.ArrayList;
+
 public class ArrayDemo {
 
+    public static void main(String[] args){
+
+        ListNode n1 = new ListNode(1, null);
+        ListNode n2 = new ListNode(2, n1);
+        ListNode n3 = new ListNode(3, n2);
+        printListFromTailToHead(n3);
+    }
 
     public static int getMaxLen(final String s) {
 
@@ -53,6 +62,47 @@ public class ArrayDemo {
         }
 
         return  reverseStr;
+
+    }
+
+    private static class ListNode{
+        public ListNode(int val, ListNode next){
+            this.val = val;
+            this.next = next;
+
+        }
+        int val;
+        ListNode next;
+    }
+
+    public static ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+        if(null == listNode)
+            return new ArrayList();
+
+        ListNode cur = listNode;
+
+        ListNode orgNext = null;
+        ListNode orgPrev = null;
+
+        while(null != cur){
+            orgNext = cur.next;
+            cur.next = orgPrev;
+
+            ListNode tmp = orgNext.next;
+            orgNext.next = cur;
+
+            orgPrev = cur;
+            cur = tmp;
+        }
+
+        ArrayList<Integer> res = new ArrayList();
+
+        while(cur != null){
+            res.add(cur.val);
+            cur = cur.next;
+        }
+
+        return res;
 
     }
 
